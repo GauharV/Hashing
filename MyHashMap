@@ -1,3 +1,11 @@
+/**
+ * Gauhar Veeravalli
+ * Course: Java II
+ * Date: 04/09/30
+ *
+ * Building a seperate chain.
+ */
+
 import java.util.LinkedList;
 
 public class MyHashMap<K, V> {
@@ -33,7 +41,7 @@ public class MyHashMap<K, V> {
 
     // ── put ───────────────────────────────────────────────────────────────
     public V put(K key, V value) {
-        // TODO Step 1: compute the index using hash(key)
+        //  TODO Step 1: compute the index using hash(key)
 
         // TODO Step 2: if table[index] is null, create a new LinkedList there
 
@@ -44,8 +52,20 @@ public class MyHashMap<K, V> {
 
         // TODO Step 4: no existing entry found -- add a new Entry to the
         //   FRONT of the list (O(1) -- no traversal needed), increment size, return null
-
-        return null; // replace this
+        int index = hash(key);
+        if (table[index].equals(null)){
+            table[index] = new LinkedList<>();
+        }
+        for (Entry<K, V> entry : table[index]){
+            if (entry.key.equals(key)){
+                V oldValue = entry.value;
+                entry.value = value;
+                return oldValue;
+            }
+        }
+        table[index].addFirst(new Entry<>(key, value));
+        size++;
+        return null;
     }
 
     // ── get ───────────────────────────────────────────────────────────────
@@ -59,7 +79,16 @@ public class MyHashMap<K, V> {
 
         // TODO Step 4: key was not in the list -- return null
 
-        return null; // replace this
+        int index = hash(key);
+        if (table[index].equals(null)){
+            return null;
+        }
+        for (Entry<K, V> entry : table[index]){
+            if (entry.key.equals(key)){
+                return entry.value;
+            }
+        }
+        return null;
     }
 
     // ── containsKey ───────────────────────────────────────────────────────
