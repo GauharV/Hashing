@@ -6,6 +6,7 @@
  * Building a seperate chain.
  */
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class MyHashMap<K, V> {
@@ -106,7 +107,7 @@ public class MyHashMap<K, V> {
                 return true;
             }
         }
-        return false; 
+        return false;
     }
 
     // ── remove ────────────────────────────────────────────────────────────
@@ -127,6 +128,16 @@ public class MyHashMap<K, V> {
         int index = hash(key);
         if (table[index].equals(null)){
             return null;
+        }
+        Iterator<Entry<K, V>> it = table[index].iterator();
+        while (it.hasNext()){
+            Entry<K, V> entry = it.next();
+            if (entry.key.equals(key)){
+                V value = entry.value;
+                it.remove();
+                size--;
+                return value;
+            }
         }
         return null; // replace this
     }
