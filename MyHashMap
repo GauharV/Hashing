@@ -41,6 +41,10 @@ public class MyHashMap<K, V> {
     }
 
     // ── put ───────────────────────────────────────────────────────────────
+    // We use .equals() instead of == because == only checks if the two keys are
+    // the exact same object, while .equals() checks if their values are the same.
+    // We use an Iterator in remove because removing inside a for-each loop breaks
+    // the loop, but an iterator lets us safely remove elements while looping.
     public V put(K key, V value) {
         //  TODO Step 1: compute the index using hash(key)
 
